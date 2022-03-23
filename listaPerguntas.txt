@@ -1,0 +1,12 @@
+Perguntas a serem respondidas tal analise:
+
+1- Quais são as categorias mais comuns de Filmes?
+2- Qual o numero de titulo por Genero?
+3- Qual a mediana de Avaliação dos filmes por genero?
+4- Qual a mediana de Avaliação dos filmes em relação ao ano por estreia?
+5- Qual o numero de filmes avaliado por Genero em relação ao ano de estreia?
+6- Qual o filme com maior tempo de duração? Calcule os Percentis
+7- Qual a relação entre duração e genero?
+8- QUal o numero de filmes produzidos por pais?
+9- Quais são os TOP 10 melhores filmes?
+10- Quais são os TOP 10 piores Filmes?

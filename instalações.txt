@@ -1,0 +1,9 @@
+# instalar a versão o imdb-sqlite
+# terminal - pip install -q imdb-sqlite
+
+# instalar pacote pycountry (Validação de paises)
+# terminal - pip install pycountry
+
+
+# Bixar Dados imdb
+#terminal - imdb-sqlite  (Fazer o downlaod e cria o BD automatico -9GB de dados)
