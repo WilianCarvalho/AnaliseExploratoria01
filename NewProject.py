@@ -1,10 +1,11 @@
 #Verificando a versão do Python
 from operator import index
+from optparse import Values
 from platform import python_version
 from sys import displayhook
 from tkinter.ttk import Style
 from turtle import color
-print(python_version())
+#print(python_version())
 
 
 #importação de pacotes
@@ -29,7 +30,7 @@ conn = sqlite3.connect('imdb.db')
 
 # Extrair lista de tabelas
 tabelas = pd.read_sql_query('SELECT name as TableName FROM sqlite_master WHERE type = "table"',conn)
-print(type(tabelas))
+#print(type(tabelas))
 #print(tabelas)
 
 #Converter tabela em Lista
@@ -142,7 +143,7 @@ generos = generos.drop(columns='n',axis = 0)
 
 #Calcula o Percentual
 generos_percentual = 100 * pd.Series(generos.sum()).sort_values(ascending=False) / generos.shape[0]
-print(generos_percentual.head(10))
+#print(generos_percentual.head(10))
 
 #PLOT 
 
@@ -151,4 +152,30 @@ plt_gen = sns.barplot(x = generos_percentual.values, y = generos_percentual.inde
 plt_gen = plt.ylabel('Gênero')
 plt_gen = plt.xlabel("\nPercentual de Filmes (%)")
 plt_gen = plt.title('\n Número (Percentual) de Títulos por Gênero\n')
-plt_gen = plt.show()
+#plt_gen = plt.show()
+
+#-----------------------------------------------------------------------#
+#            3 - Qual a mediana de Avaliação dos Filmes por gênero?     #
+#-----------------------------------------------------------------------#
+
+#Consulta SQL
+consulta3 = '''
+            SELECT rating, genres 
+              FROM ratings JOIN titles ON ratings.title_id = titles.title_id
+             WHERE premiered <= 2022 AND type = 'movie' 
+           '''
+resultado3 = pd.read_sql_query(consulta3,conn)
+#print(resultado3)
+
+#Criar a função para retornar os Generos
+def rentorna_generos(df):
+    df['genres'] = df['genres'].str.lower().values
+    temp = df['genres'].dropna() #excluis valores vazios
+    vetor = CountVectorizer(token_pattern= '(?u)\\b[\\w-]+\\b', analyzer= 'word').fit(temp)
+    generos_unicos = vetor.get_feature_names()
+    generos_unicos = [genre for genre in generos_unicos if len(genre) > 1]
+    return generos_unicos
+
+#Aplica a função  
+generos_unicos = rentorna_generos(resultado3)
+print(generos_unicos)
